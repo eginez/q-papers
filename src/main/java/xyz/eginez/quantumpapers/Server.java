@@ -53,7 +53,8 @@ public class Server {
         IndexSearcher searcher = new IndexSearcher(DirectoryReader.open(FSDirectory.open(Paths.get(INDEX_PATH))));
         for(Paper paper : parseEmbeddings("src/test/resources/papers.txt.json")) {
             var res = search(searcher, paper.embeddings, 10);
-            results.put(new Paper(paper.id, paper.title, paper.arxiv_id, null), res);
+            //results.put(new Paper(paper.id, paper.title, paper.arxiv_id, null), res);
+            results.put(paper, res);
         }
         return results;
     }
