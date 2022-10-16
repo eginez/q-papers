@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: xyz.eginez.quantumpapers
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [ annotation-api, app-name, graalvm, http-client, jackson-databind, java, java-application, jetty-server, junit, logback, maven, readme, shade, views-freemarker, yaml ]
