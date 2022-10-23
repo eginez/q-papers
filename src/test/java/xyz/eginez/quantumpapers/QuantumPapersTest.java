@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Assertions;
 import jakarta.inject.Inject;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 
 @MicronautTest
 class QuantumPapersTest {
@@ -26,5 +29,4 @@ class QuantumPapersTest {
         var res = s.index(Optional.of("src/test/resources/papers.txt"), Optional.of(true));
         Assertions.assertTrue(true);
     }
-
 }

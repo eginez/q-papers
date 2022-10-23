@@ -1,0 +1,93 @@
+<head>
+    <style> body { margin: 0; } </style>
+
+    <script src="//unpkg.com/force-graph"></script>
+    <script src="/api/static/cytoscape.min.js"> </script>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        #graph {
+            min-height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div id="graph"></div>
+<!--
+
+<script>
+        fetch('/api/graph/data').then(res => res.json()).then(data => {
+        const Graph = ForceGraph()
+        (document.getElementById('graph'))
+        .graphData(data)
+        .nodeId('id')
+        .nodeVal('id')
+        //.nodeLabel('label')
+        //.nodeColor('blue')
+        .linkSource('source')
+        .linkTarget('target')
+        .d3AlphaDecay(0)
+        .d3VelocityDecay(0.01)
+        .cooldownTime(15000)
+        .linkColor(() => 'rgba(0,0,0,1)')
+        .zoom(0.05)
+        .enablePointerInteraction(false);
+    });
+</script>
+-->
+<script>
+    fetch('/api/graph/data').then(res => res.json()).then(data => {
+        var pr_data = [];
+        for (var i = 0; i < data.nodes.length; i++) {
+            pr_data.push({selectable: false, grabbable: false, data: {id: data.nodes[i].id, label: data.nodes[i].label}});
+        }
+        for (var i = 0; i < data.links.length; i++) {
+            pr_data.push({data: {id: data.links[i].source+data.links[i].target, source: data.links[i].source, target: data.links[i].target}});
+        }
+
+
+        const cy = cytoscape({
+            container: document.getElementById('graph'),
+            elements: pr_data,
+            style: [
+                {
+                    selector: 'node',
+                    style: {
+                        'background-color': '#666',
+                      //  'label': 'data(id)'
+                    }
+                },
+                {
+                    selector: 'edge',
+                    style: {
+                        'width': 1,
+                        'line-color': '#000',
+                 //       'target-arrow-color': '#ccc',
+                  //      'target-arrow-shape': 'triangle'
+                    }
+                }
+            ],
+            layout: {
+                name: 'cose',
+                animate: false,
+                randomize: false,
+                fit: true,
+                padding: 10,
+                nodeRepulsion: 2048,
+                idealEdgeLength: 5,
+                edgeElasticity: 100,
+                nestingFactor: 5,
+                gravity: 80,
+                numIter: 1000,
+                initialTemp: 1000,
+                coolingFactor: 0.95,
+                minTemp: 1.0
+            }
+        });
+    });
+</script>
+</body>
